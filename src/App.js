@@ -9,6 +9,7 @@ function App() {
   const [activeBgColor, setActiveBgColor] = useState("#fff");
   const [firstLine, setFirstLine] = useState("Naam");
   const [secondLine, setSecondLine] = useState("");
+  const [logo, setLogo] = useState(false);
 
   const colors = ["#fff", "#000", "#485868", "#73bab4"];
 
@@ -37,11 +38,12 @@ function App() {
         <div
           className="d-flex flex-column border p-5 bg-light"
           style={{
-            width: "300px",
+            width: "400px",
             height: "200px",
           }}
         >
           <Canvas
+            logo={logo}
             color={activeColor}
             backgroundColor={activeBgColor}
             line1={firstLine}
@@ -65,6 +67,15 @@ function App() {
               idStart="c"
             />
           </div>
+          <label className="d-flex flex-column my-2">
+            Logo
+            <input
+              type="checkbox"
+              checked={logo}
+              onChange={(e) => setLogo(e.target.checked)}
+            />
+          </label>
+
           <TextForm
             onSubmit={(e) => e.preventDefault()}
             onChange={handleChange}
