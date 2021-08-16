@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import Canvas from "./components/Canvas";
-import ColorRow from "./components/ColorRow";
+import Select from "./components/Select/Select";
 import TextForm from "./components/TextForm";
 
 function App() {
@@ -52,19 +52,19 @@ function App() {
         </div>
         <div className="d-flex flex-column">
           <div className="d-flex flex-column">
-            <ColorRow
-              text="Achtergrond"
-              colors={colors}
-              onClick={handleClick}
+            <Select
               activeColor={activeBgColor}
-              idStart="bg"
-            />
-            <ColorRow
-              text="Tekst"
               colors={colors}
-              onClick={handleClick}
+              idStart="bg"
+              handleClick={handleClick}
+              label="Achtergrond"
+            />
+            <Select
               activeColor={activeColor}
+              colors={colors}
               idStart="c"
+              handleClick={handleClick}
+              label="Tekst"
             />
           </div>
           <label className="d-flex flex-column my-2">

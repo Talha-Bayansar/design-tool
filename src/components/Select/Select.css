@@ -1,0 +1,41 @@
+.select_container {
+  display: flex;
+  position: relative;
+  align-items: center;
+  width: min-content;
+  height: 40px;
+  border: 2px solid lightgrey;
+  border-radius: 10px 10px 10px 10px;
+  cursor: pointer;
+}
+
+.active_select_container {
+  border-radius: 10px 10px 0 0;
+  border-bottom: none;
+}
+
+.select_color {
+  display: block;
+  margin: 0.5rem;
+  width: 20px;
+  height: 20px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.select_content {
+  display: flex;
+  flex-direction: column;
+  max-width: 220px;
+  width: max-content;
+  padding: 5px 0;
+  border: 2px solid lightgrey;
+  border-radius: 0 10px 10px 10px;
+}
+
+.select_colors {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
