@@ -5698,6 +5698,10 @@ button.bg-white:focus {
 .d-inline-flex {
   display: inline-flex !important;
 }
+.custom-flex {
+  display: flex !important;
+  flex-direction: column !important;
+}
 @media (min-width: 576px) {
   .d-sm-none {
     display: none !important;
@@ -5754,6 +5758,9 @@ button.bg-white:focus {
   }
   .d-md-inline-flex {
     display: inline-flex !important;
+  }
+  .custom-flex {
+    flex-direction: row !important;
   }
 }
 @media (min-width: 992px) {

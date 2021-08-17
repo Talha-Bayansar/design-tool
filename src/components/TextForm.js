@@ -7,12 +7,12 @@ const TextForm = ({ onSubmit, onChange, line1, line2, line3, lineCount }) => {
       {lines.map((line, i) => {
         if (i < lineCount)
           return (
-            <div className="form-group">
+            <div key={i} className="form-group">
               <label>Lijn {i + 1}</label>
               <input
                 type="text"
                 className="form-control"
-                id={`line${i + 1}`}
+                id={`line${i}`}
                 maxLength="15"
                 value={line}
                 onChange={onChange}
@@ -20,17 +20,6 @@ const TextForm = ({ onSubmit, onChange, line1, line2, line3, lineCount }) => {
             </div>
           );
       })}
-      {/* <div className="form-group">
-        <label>Tweede lijn</label>
-        <input
-          type="text"
-          className="form-control"
-          id="line2"
-          maxLength="15"
-          value={line2}
-          onChange={onChange}
-        />
-      </div> */}
       <button type="submit" className="btn btn-primary">
         In winkelwagen
       </button>

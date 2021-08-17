@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Canvas from "./Canvas";
 import Select from "./Select/Select";
 import TextForm from "./TextForm";
@@ -21,14 +21,16 @@ const DesignTool = ({ lineCount }) => {
     const generatedSvg = (
       <Svg
         logo={logo}
-        width={200}
-        height={100}
+        color={activeColor}
+        bgColor={activeBgColor}
+        width={304}
+        height={104}
         scale={0.9}
         line1={line1}
         line2={line2}
         line3={line3}
         fontSize={fontSize}
-        fontRatio={0.85}
+        fontRatio={1}
       />
     );
     setSvg(generatedSvg);
@@ -43,9 +45,9 @@ const DesignTool = ({ lineCount }) => {
   };
 
   const handleChange = (e) => {
-    if (e.target.id === "line1") {
+    if (e.target.id === "line0") {
       setLine1(e.target.value);
-    } else if (e.target.id === "line2") {
+    } else if (e.target.id === "line1") {
       setLine2(e.target.value);
     } else {
       setLine3(e.target.value);
@@ -53,11 +55,12 @@ const DesignTool = ({ lineCount }) => {
   };
 
   return (
-    <div className="container d-flex w-100 justify-content-around my-3">
+    <div className="container custom-flex w-100 justify-content-around my-5 p-5 border">
       <div
-        className="d-flex flex-column border p-5 bg-light"
+        className="d-flex flex-column border p-5 bg-light sticky-top mb-5 mb-md-0"
         style={{
-          width: "400px",
+          width: "100%",
+          maxWidth: "400px",
           height: "200px",
         }}
       >
