@@ -1,19 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ScaleText from "react-scale-text";
 
 const Canvas = (props) => {
-  const { color, backgroundColor, line1, line2, logo } = props;
+  const { color, backgroundColor, line1, line2, logo, setFontSize } = props;
   return (
     <div
-      className="d-flex justify-content-center align-items-center h-100 w-100 p-3"
+      className={`d-flex justify-content-${
+        logo ? "between" : "center"
+      } align-items-center h-100 w-100 p-3`}
       style={{
         backgroundColor: backgroundColor,
       }}
     >
-      {logo && <h1 className="mr-3 mb-0 p-3 border">Logo</h1>}
+      {logo && (
+        <div
+          className="border ml-3"
+          style={{ height: "50px", width: "60px", backgroundColor: "black" }}
+        ></div>
+      )}
       {(line1 || line2) && (
-        <ScaleText>
-          <div className="d-flex flex-column justify-content-center align-items-center w-100 h-100">
+        <ScaleText minFontSize={3}>
+          <CustomDiv setFontSize={setFontSize}>
             {line1 && (
               <span className="text-nowrap" style={{ color: color }}>
                 {line1}
@@ -24,9 +31,20 @@ const Canvas = (props) => {
                 {line2}
               </span>
             )}
-          </div>
+          </CustomDiv>
         </ScaleText>
       )}
+    </div>
+  );
+};
+
+export const CustomDiv = ({ fontSize, children, setFontSize }) => {
+  useEffect(() => {
+    setFontSize(fontSize);
+  }, [fontSize]);
+  return (
+    <div className="d-flex flex-column justify-content-center align-items-center">
+      {children}
     </div>
   );
 };

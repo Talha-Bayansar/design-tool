@@ -1,30 +1,36 @@
 import React from "react";
 
-const TextForm = ({ onSubmit, onChange, firstLine, secondLine }) => {
+const TextForm = ({ onSubmit, onChange, line1, line2, line3, lineCount }) => {
+  const lines = [line1, line2, line3];
   return (
     <form onSubmit={onSubmit}>
-      <div className="form-group">
-        <label>Eerste lijn</label>
-        <input
-          type="text"
-          className="form-control"
-          id="line1"
-          maxLength="15"
-          value={firstLine}
-          onChange={onChange}
-        />
-      </div>
-      <div className="form-group">
+      {lines.map((line, i) => {
+        if (i < lineCount)
+          return (
+            <div className="form-group">
+              <label>Lijn {i + 1}</label>
+              <input
+                type="text"
+                className="form-control"
+                id={`line${i + 1}`}
+                maxLength="15"
+                value={line}
+                onChange={onChange}
+              />
+            </div>
+          );
+      })}
+      {/* <div className="form-group">
         <label>Tweede lijn</label>
         <input
           type="text"
           className="form-control"
           id="line2"
           maxLength="15"
-          value={secondLine}
+          value={line2}
           onChange={onChange}
         />
-      </div>
+      </div> */}
       <button type="submit" className="btn btn-primary">
         In winkelwagen
       </button>
