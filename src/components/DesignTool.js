@@ -4,7 +4,7 @@ import Select from "./Select/Select";
 import TextForm from "./TextForm";
 import Svg from "./Svg";
 
-const DesignTool = ({ lineCount }) => {
+const DesignTool = ({ width, height, lineCount }) => {
   const [activeColor, setActiveColor] = useState("#000");
   const [activeBgColor, setActiveBgColor] = useState("#fff");
   const [line1, setLine1] = useState("Naam");
@@ -13,6 +13,7 @@ const DesignTool = ({ lineCount }) => {
   const [logo, setLogo] = useState(false);
   const [svg, setSvg] = useState(null);
   const [fontSize, setFontSize] = useState(16);
+  const ratio = (height / width) * 100;
 
   const colors = ["#fff", "#000", "#485868", "#73bab4"];
 
@@ -23,9 +24,8 @@ const DesignTool = ({ lineCount }) => {
         logo={logo}
         color={activeColor}
         bgColor={activeBgColor}
-        width={304}
-        height={104}
-        scale={0.9}
+        width={width}
+        height={height}
         line1={line1}
         line2={line2}
         line3={line3}
@@ -61,7 +61,7 @@ const DesignTool = ({ lineCount }) => {
         style={{
           width: "100%",
           maxWidth: "400px",
-          height: "200px",
+          height: "min-content",
         }}
       >
         <Canvas
@@ -72,10 +72,11 @@ const DesignTool = ({ lineCount }) => {
           line2={line2}
           line3={line3}
           setFontSize={setFontSize}
+          ratio={ratio}
         />
       </div>
-      <div className="d-flex flex-column">
-        <div className="d-flex flex-column">
+      <div className="d-flex flex-column align-items-center align-items-md-start">
+        <div className="d-flex flex-column align-items-center align-items-md-start">
           <Select
             activeColor={activeBgColor}
             colors={colors}
@@ -91,7 +92,7 @@ const DesignTool = ({ lineCount }) => {
             label="Tekst"
           />
         </div>
-        <label className="d-flex flex-column my-2">
+        <label className="d-flex flex-column align-items-center align-items-md-start my-2">
           Logo
           <input
             type="checkbox"

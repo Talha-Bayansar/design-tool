@@ -11,7 +11,6 @@ const Svg = ({
   fontRatio,
   width,
   height,
-  scale,
 }) => {
   return (
     <svg style={{ marginTop: "1rem" }} width={width} height={height}>

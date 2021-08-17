@@ -3,7 +3,10 @@ import React from "react";
 const TextForm = ({ onSubmit, onChange, line1, line2, line3, lineCount }) => {
   const lines = [line1, line2, line3];
   return (
-    <form onSubmit={onSubmit}>
+    <form
+      className="d-flex flex-column align-items-center align-items-md-start"
+      onSubmit={onSubmit}
+    >
       {lines.map((line, i) => {
         if (i < lineCount)
           return (

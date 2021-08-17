@@ -6,9 +6,9 @@ function App() {
       <nav className="w-100 d-flex justify-content-center bg-primary p-3 mb-5">
         Navbar
       </nav>
-      <DesignTool lineCount={1} />
-      <DesignTool lineCount={2} />
-      <DesignTool lineCount={3} />
+      <DesignTool width={300} height={100} lineCount={1} />
+      <DesignTool width={300} height={100} lineCount={2} />
+      <DesignTool width={300} height={100} lineCount={3} />
     </div>
   );
 }
