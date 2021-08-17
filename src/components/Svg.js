@@ -11,6 +11,7 @@ const Svg = ({
   fontRatio,
   width,
   height,
+  scale,
 }) => {
   return (
     <svg style={{ marginTop: "1rem" }} width={width} height={height}>
@@ -18,7 +19,16 @@ const Svg = ({
       {(line1 || line2) && (
         <g>
           {logo && (
-            <rect x="8%" y="25%" width="50px" height="50px" fill="black"></rect>
+            <rect
+              x="15%"
+              y="50%"
+              width={`${50 * scale}px`}
+              height={`${50 * scale}px`}
+              transform={`translate(-${(50 * scale) / 2}, -${
+                (50 * scale) / 2
+              })`}
+              fill="black"
+            ></rect>
           )}
           <g>
             {line1 && (
@@ -28,7 +38,7 @@ const Svg = ({
                 textAnchor="middle"
                 dominantBaseline="middle"
                 fill={color}
-                fontSize={`${fontSize * fontRatio}px`}
+                fontSize={`${fontSize * scale}px`}
               >
                 {line1}
               </text>
@@ -40,7 +50,7 @@ const Svg = ({
                 textAnchor="middle"
                 dominantBaseline="middle"
                 fill={color}
-                fontSize={`${fontSize * fontRatio}px`}
+                fontSize={`${fontSize * scale}px`}
               >
                 {line2}
               </text>
@@ -52,7 +62,7 @@ const Svg = ({
                 textAnchor="middle"
                 dominantBaseline="middle"
                 fill={color}
-                fontSize={`${fontSize * fontRatio}px`}
+                fontSize={`${fontSize * scale}px`}
               >
                 {line3}
               </text>

@@ -28,7 +28,7 @@ const Canvas = (props) => {
       >
         {logo && (
           <div
-            className="ml-3 p-4"
+            className="mx-3 p-4"
             style={{ height: "50px", width: "50px", backgroundColor: "black" }}
           ></div>
         )}
@@ -66,7 +66,7 @@ export const CustomDiv = ({ fontSize, children, setFontSize }) => {
     setFontSize(fontSize);
   }, [fontSize]);
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center h-100 w-100">
+    <div className="d-flex flex-column justify-content-around align-items-center h-100 w-100">
       {children}
     </div>
   );

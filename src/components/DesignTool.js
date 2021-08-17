@@ -14,6 +14,7 @@ const DesignTool = ({ width, height, lineCount }) => {
   const [svg, setSvg] = useState(null);
   const [fontSize, setFontSize] = useState(16);
   const ratio = (height / width) * 100;
+  const scale = width / 400;
 
   const colors = ["#fff", "#000", "#485868", "#73bab4"];
 
@@ -31,6 +32,7 @@ const DesignTool = ({ width, height, lineCount }) => {
         line3={line3}
         fontSize={fontSize}
         fontRatio={1}
+        scale={scale}
       />
     );
     setSvg(generatedSvg);
@@ -59,8 +61,7 @@ const DesignTool = ({ width, height, lineCount }) => {
       <div
         className="d-flex flex-column border p-5 bg-light sticky-top mb-5 mb-md-0"
         style={{
-          width: "100%",
-          maxWidth: "400px",
+          width: "400px",
           height: "min-content",
         }}
       >
