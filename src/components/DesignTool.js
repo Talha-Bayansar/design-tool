@@ -3,6 +3,8 @@ import Canvas from "./Canvas";
 import Select from "./Select/Select";
 import TextForm from "./TextForm";
 import Svg from "./Svg";
+import { useMediaQuery } from "react-responsive";
+import ScaleText from "react-scale-text";
 
 const DesignTool = ({ width, height, lineCount }) => {
   // Color
@@ -27,8 +29,10 @@ const DesignTool = ({ width, height, lineCount }) => {
   // Ratio of width and height
   const ratio = (height / width) * 100;
 
+  const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
+
   // Scale of canvas compared to generated svg
-  const scale = width / 400;
+  const scale = width / (isMobile ? 300 : 400);
 
   const colors = ["#fff", "#000", "#485868", "#73bab4"];
 
@@ -122,7 +126,7 @@ const DesignTool = ({ width, height, lineCount }) => {
       <div
         className="d-flex flex-column border p-3 bg-light sticky-top mb-5 mb-md-0"
         style={{
-          width: "400px",
+          width: isMobile ? "300px" : "400px",
           height: "min-content",
           boxSizing: "unset",
         }}

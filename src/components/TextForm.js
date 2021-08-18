@@ -37,7 +37,7 @@ const TextForm = ({
                 />
                 <button
                   type="button"
-                  className="px-3"
+                  className="px-3 ml-1 btn rounded"
                   id="-"
                   onClick={line.function}
                 >
@@ -45,7 +45,7 @@ const TextForm = ({
                 </button>
                 <button
                   type="button"
-                  className="px-3"
+                  className="px-3 ml-1 btn rounded"
                   id="+"
                   onClick={line.function}
                 >
