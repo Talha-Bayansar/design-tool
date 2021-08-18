@@ -8,6 +8,9 @@ const Canvas = (props) => {
     line1,
     line2,
     line3,
+    fontSizeScale1,
+    fontSizeScale2,
+    fontSizeScale3,
     logo,
     setFontSize,
     ratio,
@@ -39,17 +42,29 @@ const Canvas = (props) => {
           >
             <CustomDiv setFontSize={setFontSize}>
               {line1 && (
-                <span className="text-nowrap" style={{ color: color }}>
+                <span
+                  className="text-nowrap"
+                  style={{
+                    color: color,
+                    fontSize: `${fontSizeScale1 * 100}%`,
+                  }}
+                >
                   {line1}
                 </span>
               )}
               {line2 && (
-                <span className="text-nowrap" style={{ color: color }}>
+                <span
+                  className="text-nowrap"
+                  style={{ color: color, fontSize: `${fontSizeScale2 * 100}%` }}
+                >
                   {line2}
                 </span>
               )}
               {line3 && (
-                <span className="text-nowrap" style={{ color: color }}>
+                <span
+                  className="text-nowrap"
+                  style={{ color: color, fontSize: `${fontSizeScale3 * 100}%` }}
+                >
                   {line3}
                 </span>
               )}

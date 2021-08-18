@@ -8,7 +8,9 @@ const Svg = ({
   line2,
   line3,
   fontSize,
-  fontRatio,
+  fontSizeScale1,
+  fontSizeScale2,
+  fontSizeScale3,
   width,
   height,
   scale,
@@ -38,7 +40,7 @@ const Svg = ({
                 textAnchor="middle"
                 dominantBaseline="middle"
                 fill={color}
-                fontSize={`${fontSize * scale}px`}
+                fontSize={`${fontSize * fontSizeScale1 * scale}px`}
               >
                 {line1}
               </text>
@@ -50,7 +52,7 @@ const Svg = ({
                 textAnchor="middle"
                 dominantBaseline="middle"
                 fill={color}
-                fontSize={`${fontSize * scale}px`}
+                fontSize={`${fontSize * fontSizeScale2 * scale}px`}
               >
                 {line2}
               </text>
@@ -62,7 +64,7 @@ const Svg = ({
                 textAnchor="middle"
                 dominantBaseline="middle"
                 fill={color}
-                fontSize={`${fontSize * scale}px`}
+                fontSize={`${fontSize * fontSizeScale3 * scale}px`}
               >
                 {line3}
               </text>
