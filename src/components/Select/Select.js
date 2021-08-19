@@ -1,43 +1,51 @@
 import React, { useState } from "react";
 import "./Select.css";
 
-const Select = ({ activeColor, colors, idStart, handleClick, label }) => {
+const Select = ({ selectedColor, colors, idStart, onClick, label }) => {
   const [isSelected, setIsSelected] = useState(false);
 
-  const handleSelectClick = () => {
+  const handleClickSelect = () => {
     setIsSelected(!isSelected);
   };
 
   return (
-    <div className="d-flex flex-column mb-3">
-      <div
-        className={`select_container ${
-          isSelected && "active_select_container"
-        }`}
-        onClick={handleSelectClick}
-      >
-        <div
-          className="select_color"
-          style={{ backgroundColor: activeColor }}
-        ></div>
-        <span className="mx-2">{label}</span>
+    <label className="d-flex flex-column align-items-start mx-1">
+      {label}
+      <div className="d-flex flex-column align-items-center">
+        <div className="select_container" onClick={handleClickSelect}>
+          <div
+            className="select_color"
+            style={{ backgroundColor: selectedColor }}
+          />
+          <span className="m-2">↓</span>
+        </div>
+        {isSelected && (
+          <div
+            style={{
+              width: "20px",
+              height: "20px",
+              backgroundColor: "lightgrey",
+              clipPath: "polygon(0% 0%, 100% 0%, 50% 100%)",
+            }}
+          />
+        )}
       </div>
       {isSelected && (
         <div className="select_content">
           <div className="select_colors">
-            {/* {colors.map((color, i) => (
+            {colors.map((color, i) => (
               <div
                 key={i}
-                onClick={handleClick}
+                onClick={onClick}
                 className="select_color my-1"
                 id={`${idStart}_${color}`}
                 style={{ backgroundColor: color }}
               ></div>
-            ))} */}
+            ))}
           </div>
         </div>
       )}
-    </div>
+    </label>
   );
 };
 
