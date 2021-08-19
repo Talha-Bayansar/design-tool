@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Canvas from "./Canvas";
 import Select from "./Select/Select";
 import TextForm from "./TextForm";
 import Svg from "./Svg";
 import { useMediaQuery } from "react-responsive";
-import ScaleText from "react-scale-text";
 
 const DesignTool = ({ width, height, lineCount }) => {
   // Color
