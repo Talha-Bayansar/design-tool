@@ -5762,6 +5762,7 @@ button.bg-white:focus {
   }
   .custom-flex {
     flex-direction: row !important;
+    align-items: start;
   }
 }
 @media (min-width: 992px) {

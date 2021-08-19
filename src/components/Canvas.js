@@ -1,27 +1,41 @@
 import React, { useEffect } from "react";
-import ScaleText from "react-scale-text";
+// import ScaleText from "react-scale-text";
 
 const Canvas = (props) => {
   const {
+    lines,
     fontColor,
     backgroundColor,
     width,
     height,
-    lines,
+    scale,
+    logo,
+    widthIcon,
+    heightIcon,
     // fontSizeScale1,
     // fontSizeScale2,
     // fontSizeScale3,
-    // logo,
     // setFontSize,
     // ratio,
   } = props;
   return (
-    <svg width={width} height={height}>
+    <svg width={300} height={height * scale}>
       <rect fill={backgroundColor} width="100%" height="100%" />
+      {logo && (
+        <rect
+          textAnchor="middle"
+          dominantBaseline="middle"
+          x="15%"
+          y={(height * scale - heightIcon * scale) / 2}
+          width={widthIcon * scale}
+          height={heightIcon * scale}
+          fill={fontColor}
+        />
+      )}
       <g
         textAnchor="middle"
         dominantBaseline="middle"
-        style={{ transform: "translate(50%, 50%)" }}
+        style={{ transform: `translate(${logo ? "75%" : "50%"}, 50%)` }}
       >
         {Object.keys(lines).map((key, i) => {
           if (lines[key]) {

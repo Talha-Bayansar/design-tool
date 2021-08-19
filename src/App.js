@@ -13,9 +13,27 @@ function App() {
         defaultFontColor={"#000"}
         lineCount={4}
       />
-      {/* <DesignTool width={300} height={100} lineCount={2} />
-      <DesignTool width={300} height={100} lineCount={3} />
-      <DesignTool width={300} height={100} lineCount={3} /> */}
+      <DesignTool
+        width={300}
+        height={100}
+        defaultBackgroundColor={"#fff"}
+        defaultFontColor={"#000"}
+        lineCount={3}
+      />
+      <DesignTool
+        width={300}
+        height={100}
+        defaultBackgroundColor={"#fff"}
+        defaultFontColor={"#000"}
+        lineCount={2}
+      />
+      <DesignTool
+        width={300}
+        height={100}
+        defaultBackgroundColor={"#fff"}
+        defaultFontColor={"#000"}
+        lineCount={1}
+      />
     </div>
   );
 }

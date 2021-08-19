@@ -16,6 +16,7 @@ const DesignTool = ({
   const MAX_LINE_COUNT = 4;
   const colors = ["#fff", "#000", "#485868", "#73bab4"];
   const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
+  const scale = 300 / width;
 
   // initialisation functions----------------------------------------------------------------------------------
   const initializeLines = () => {
@@ -33,6 +34,7 @@ const DesignTool = ({
     defaultBackgroundColor || "#fff"
   );
   const [lines, setLines] = useState(initializeLines());
+  const [logo, setLogo] = useState(false);
 
   // functions-------------------------------------------------------------------------------------------------
   const handleChangeLines = (e) => {
@@ -66,7 +68,6 @@ const DesignTool = ({
   // const [fontSizeScale3, setFontSizeScale3] = useState(1);
 
   // // logo, svg, font size
-  // const [logo, setLogo] = useState(false);
   // const [svg, setSvg] = useState(null);
   // const [fontSize, setFontSize] = useState(16);
 
@@ -147,15 +148,15 @@ const DesignTool = ({
     <div className="container custom-flex w-100 justify-content-around my-5 p-5 border">
       <div className="d-flex bg-light sticky-top p-3">
         <Canvas
-          // logo={logo}
+          lines={lines}
           fontColor={fontColor}
           backgroundColor={backgroundColor}
           width={width}
           height={height}
-          lines={lines}
-          // line1={line1}
-          // line2={line2}
-          // line3={line3}
+          scale={scale}
+          logo={logo}
+          widthIcon={50}
+          heightIcon={50}
           // fontSizeScale1={fontSizeScale1}
           // fontSizeScale2={fontSizeScale2}
           // fontSizeScale3={fontSizeScale3}
@@ -179,15 +180,16 @@ const DesignTool = ({
             onClick={handleChangeColors}
             label="Tekst"
           />
+          <label className="d-flex flex-column align-items-center align-items-md-start mx-1">
+            Logo
+            <input
+              type="checkbox"
+              style={{ height: "40px", width: "40px" }}
+              checked={logo}
+              onChange={(e) => setLogo(e.target.checked)}
+            />
+          </label>
         </div>
-        <label className="d-flex flex-column align-items-center align-items-md-start my-2">
-          Logo
-          <input
-            type="checkbox"
-            // checked={logo}
-            // onChange={(e) => setLogo(e.target.checked)}
-          />
-        </label>
 
         <TextForm
           lines={lines}
