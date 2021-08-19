@@ -4,9 +4,8 @@ const TextForm = ({
   lines,
   onSubmit,
   onChange,
-  // handleFontSizeScale1Change,
-  // handleFontSizeScale2Change,
-  // handleFontSizeScale3Change,
+  onClickIncrement,
+  onClickDecrement,
 }) => {
   return (
     <form
@@ -28,16 +27,14 @@ const TextForm = ({
             <button
               type="button"
               className="px-3 ml-1 btn rounded"
-              id="-"
-              // onClick={() => console.log(`${key}: ${lines[key]}`)}
+              onClick={() => onClickDecrement(key)}
             >
               -
             </button>
             <button
               type="button"
               className="px-3 ml-1 btn rounded"
-              id="+"
-              // onClick={() => console.log(`${key}: ${lines[key]}`)}
+              onClick={() => onClickIncrement(key)}
             >
               +
             </button>

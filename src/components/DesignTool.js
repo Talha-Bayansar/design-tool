@@ -13,6 +13,7 @@ const DesignTool = ({
   lineCount,
 }) => {
   //constants--------------------------------------------------------------------------------------------------
+  const MIN_LINE_COUNT = 1;
   const MAX_LINE_COUNT = 4;
   const colors = ["#fff", "#000", "#485868", "#73bab4"];
   const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
@@ -20,12 +21,33 @@ const DesignTool = ({
 
   // initialisation functions----------------------------------------------------------------------------------
   const initializeLines = () => {
-    const count = lineCount > MAX_LINE_COUNT ? MAX_LINE_COUNT : lineCount;
+    const count =
+      lineCount > MAX_LINE_COUNT
+        ? MAX_LINE_COUNT
+        : lineCount < MIN_LINE_COUNT
+        ? MIN_LINE_COUNT
+        : lineCount;
+
     let lines = {};
     for (let i = 0; i < count; i++) {
       lines = { ...lines, [`line${i}`]: "" };
     }
     return lines;
+  };
+
+  const initializeFontSizes = () => {
+    const count =
+      lineCount > MAX_LINE_COUNT
+        ? MAX_LINE_COUNT
+        : lineCount < MIN_LINE_COUNT
+        ? MIN_LINE_COUNT
+        : lineCount;
+
+    let fontSizes = {};
+    for (let i = 0; i < count; i++) {
+      fontSizes = { ...fontSizes, [`line${i}`]: 16 };
+    }
+    return fontSizes;
   };
 
   // states----------------------------------------------------------------------------------------------------
@@ -35,6 +57,7 @@ const DesignTool = ({
   );
   const [lines, setLines] = useState(initializeLines());
   const [logo, setLogo] = useState(false);
+  const [fontSizes, setFontSizes] = useState(initializeFontSizes());
 
   // functions-------------------------------------------------------------------------------------------------
   const handleChangeLines = (e) => {
@@ -57,15 +80,18 @@ const DesignTool = ({
     console.log(lines);
   };
 
-  // useEffects------------------------------------------------------------------------------------------------
-  useEffect(() => {
-    console.log(lines);
-  }, []);
+  const incrementFontSizes = (key) => {
+    setFontSizes({ ...fontSizes, [key]: fontSizes[key] + 2 });
+  };
 
-  // // Font Size Scale for Text Lines
-  // const [fontSizeScale1, setFontSizeScale1] = useState(1);
-  // const [fontSizeScale2, setFontSizeScale2] = useState(1);
-  // const [fontSizeScale3, setFontSizeScale3] = useState(1);
+  const decrementFontSizes = (key) => {
+    setFontSizes({ ...fontSizes, [key]: fontSizes[key] - 2 });
+  };
+
+  // useEffects------------------------------------------------------------------------------------------------
+  // useEffect(() => {
+  //   console.log(lines);
+  // }, []);
 
   // // logo, svg, font size
   // const [svg, setSvg] = useState(null);
@@ -99,54 +125,9 @@ const DesignTool = ({
   //   // setSvg(generatedSvg);
   // };
 
-  // const handleFontSizeScale1Change = (e) => {
-  //   const id = e.target.id;
-  //   const max = 1.5;
-  //   const min = 0.5;
-  //   if (id === "-") {
-  //     if (fontSizeScale1 > min) {
-  //       setFontSizeScale1(fontSizeScale1 - 0.1);
-  //     }
-  //   } else {
-  //     if (fontSizeScale1 < max) {
-  //       setFontSizeScale1(fontSizeScale1 + 0.1);
-  //     }
-  //   }
-  // };
-
-  // const handleFontSizeScale2Change = (e) => {
-  //   const id = e.target.id;
-  //   const max = 1.5;
-  //   const min = 0.5;
-  //   if (id === "-") {
-  //     if (fontSizeScale2 > min) {
-  //       setFontSizeScale2(fontSizeScale2 - 0.1);
-  //     }
-  //   } else {
-  //     if (fontSizeScale2 < max) {
-  //       setFontSizeScale2(fontSizeScale2 + 0.1);
-  //     }
-  //   }
-  // };
-
-  // const handleFontSizeScale3Change = (e) => {
-  //   const id = e.target.id;
-  //   const max = 1.5;
-  //   const min = 0.5;
-  //   if (id === "-") {
-  //     if (fontSizeScale3 > min) {
-  //       setFontSizeScale3(fontSizeScale3 - 0.1);
-  //     }
-  //   } else {
-  //     if (fontSizeScale3 < max) {
-  //       setFontSizeScale3(fontSizeScale3 + 0.1);
-  //     }
-  //   }
-  // };
-
   return (
     <div className="container custom-flex w-100 justify-content-around my-5 p-5 border">
-      <div className="d-flex bg-light sticky-top p-3">
+      <div className="d-flex bg-light sticky-top p-3 mb-3 mb-md-0">
         <Canvas
           lines={lines}
           fontColor={fontColor}
@@ -157,15 +138,13 @@ const DesignTool = ({
           logo={logo}
           widthIcon={50}
           heightIcon={50}
-          // fontSizeScale1={fontSizeScale1}
-          // fontSizeScale2={fontSizeScale2}
-          // fontSizeScale3={fontSizeScale3}
+          fontSizes={fontSizes}
           // setFontSize={setFontSize}
           // ratio={ratio}
         />
       </div>
       <div className="d-flex flex-column align-items-center align-items-md-start">
-        <div className="d-flex align-items-center align-items-md-start">
+        <div className="d-flex flex-wrap align-items-start">
           <Select
             selectedColor={backgroundColor}
             colors={colors}
@@ -195,9 +174,8 @@ const DesignTool = ({
           lines={lines}
           onSubmit={handleSubmit}
           onChange={handleChangeLines}
-          // handleFontSizeScale1Change={handleFontSizeScale1Change}
-          // handleFontSizeScale2Change={handleFontSizeScale2Change}
-          // handleFontSizeScale3Change={handleFontSizeScale3Change}
+          onClickIncrement={incrementFontSizes}
+          onClickDecrement={decrementFontSizes}
         />
         {/* {svg && svg} */}
       </div>

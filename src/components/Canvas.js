@@ -12,9 +12,7 @@ const Canvas = (props) => {
     logo,
     widthIcon,
     heightIcon,
-    // fontSizeScale1,
-    // fontSizeScale2,
-    // fontSizeScale3,
+    fontSizes,
     // setFontSize,
     // ratio,
   } = props;
@@ -35,12 +33,13 @@ const Canvas = (props) => {
       <g
         textAnchor="middle"
         dominantBaseline="middle"
+        fill={fontColor}
         style={{ transform: `translate(${logo ? "75%" : "50%"}, 50%)` }}
       >
         {Object.keys(lines).map((key, i) => {
           if (lines[key]) {
             return (
-              <text fill={fontColor} y={-20 + 15 * i} key={i}>
+              <text fontSize={fontSizes[key]} y={-20 + 15 * i} key={i}>
                 {lines[key]}
               </text>
             );
