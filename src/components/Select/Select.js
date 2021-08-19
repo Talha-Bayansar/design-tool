@@ -25,7 +25,7 @@ const Select = ({ activeColor, colors, idStart, handleClick, label }) => {
       {isSelected && (
         <div className="select_content">
           <div className="select_colors">
-            {colors.map((color, i) => (
+            {/* {colors.map((color, i) => (
               <div
                 key={i}
                 onClick={handleClick}
@@ -33,7 +33,7 @@ const Select = ({ activeColor, colors, idStart, handleClick, label }) => {
                 id={`${idStart}_${color}`}
                 style={{ backgroundColor: color }}
               ></div>
-            ))}
+            ))} */}
           </div>
         </div>
       )}

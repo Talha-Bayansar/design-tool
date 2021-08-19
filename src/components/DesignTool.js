@@ -5,120 +5,154 @@ import TextForm from "./TextForm";
 import Svg from "./Svg";
 import { useMediaQuery } from "react-responsive";
 
-const DesignTool = ({ width, height, lineCount }) => {
-  // Color
-  const [activeColor, setActiveColor] = useState("#000");
-  const [activeBgColor, setActiveBgColor] = useState("#fff");
-
-  // Text Lines
-  const [line1, setLine1] = useState("Naam");
-  const [line2, setLine2] = useState("");
-  const [line3, setLine3] = useState("");
-
-  // Font Size Scale for Text Lines
-  const [fontSizeScale1, setFontSizeScale1] = useState(1);
-  const [fontSizeScale2, setFontSizeScale2] = useState(1);
-  const [fontSizeScale3, setFontSizeScale3] = useState(1);
-
-  // logo, svg, font size
-  const [logo, setLogo] = useState(false);
-  const [svg, setSvg] = useState(null);
-  const [fontSize, setFontSize] = useState(16);
-
-  // Ratio of width and height
-  const ratio = (height / width) * 100;
-
+const DesignTool = ({
+  width,
+  height,
+  defaultBackgroundColor,
+  defaultFontColor,
+  lineCount,
+}) => {
+  //constants--------------------------------------------------------------------------------------------------
+  const MAX_LINE_COUNT = 4;
   const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
-  // Scale of canvas compared to generated svg
-  const scale = width / (isMobile ? 300 : 400);
+  // initialisation functions----------------------------------------------------------------------------------
+  const initializeLines = () => {
+    const count = lineCount > MAX_LINE_COUNT ? MAX_LINE_COUNT : lineCount;
+    let lines = {};
+    for (let i = 0; i < count; i++) {
+      lines = { ...lines, [`line${i}`]: "" };
+    }
+    return lines;
+  };
 
-  const colors = ["#fff", "#000", "#485868", "#73bab4"];
+  // states----------------------------------------------------------------------------------------------------
+  const [fontColor, setFontColor] = useState(defaultFontColor || "#000");
+  const [backgroundColor, setBackgroundColor] = useState(
+    defaultBackgroundColor || "#fff"
+  );
+  const [lines, setLines] = useState(initializeLines());
+
+  // functions-------------------------------------------------------------------------------------------------
+  const handleChangeLines = (e) => {
+    const target = e.target;
+    const id = target.id;
+    const value = target.value;
+    setLines({ ...lines, [id]: value });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const generatedSvg = (
-      <Svg
-        logo={logo}
-        color={activeColor}
-        bgColor={activeBgColor}
-        width={width}
-        height={height}
-        line1={line1}
-        line2={line2}
-        line3={line3}
-        fontSizeScale1={fontSizeScale1}
-        fontSizeScale2={fontSizeScale2}
-        fontSizeScale3={fontSizeScale3}
-        fontSize={fontSize}
-        scale={scale}
-      />
-    );
-    setSvg(generatedSvg);
+    console.log(lines);
   };
 
-  const handleClick = (e) => {
-    if (e.target.id[0] === "c") {
-      setActiveColor(e.target.id.replace("c_", ""));
-    } else {
-      setActiveBgColor(e.target.id.replace("bg_", ""));
-    }
-  };
+  // useEffects------------------------------------------------------------------------------------------------
+  useEffect(() => {
+    console.log(lines);
+  }, []);
 
-  const handleChange = (e) => {
-    if (e.target.id === "line0") {
-      setLine1(e.target.value);
-    } else if (e.target.id === "line1") {
-      setLine2(e.target.value);
-    } else {
-      setLine3(e.target.value);
-    }
-  };
+  // // Font Size Scale for Text Lines
+  // const [fontSizeScale1, setFontSizeScale1] = useState(1);
+  // const [fontSizeScale2, setFontSizeScale2] = useState(1);
+  // const [fontSizeScale3, setFontSizeScale3] = useState(1);
 
-  const handleFontSizeScale1Change = (e) => {
-    const id = e.target.id;
-    const max = 1.5;
-    const min = 0.5;
-    if (id === "-") {
-      if (fontSizeScale1 > min) {
-        setFontSizeScale1(fontSizeScale1 - 0.1);
-      }
-    } else {
-      if (fontSizeScale1 < max) {
-        setFontSizeScale1(fontSizeScale1 + 0.1);
-      }
-    }
-  };
+  // // logo, svg, font size
+  // const [logo, setLogo] = useState(false);
+  // const [svg, setSvg] = useState(null);
+  // const [fontSize, setFontSize] = useState(16);
 
-  const handleFontSizeScale2Change = (e) => {
-    const id = e.target.id;
-    const max = 1.5;
-    const min = 0.5;
-    if (id === "-") {
-      if (fontSizeScale2 > min) {
-        setFontSizeScale2(fontSizeScale2 - 0.1);
-      }
-    } else {
-      if (fontSizeScale2 < max) {
-        setFontSizeScale2(fontSizeScale2 + 0.1);
-      }
-    }
-  };
+  // // Ratio of width and height
+  // const ratio = (height / width) * 100;
 
-  const handleFontSizeScale3Change = (e) => {
-    const id = e.target.id;
-    const max = 1.5;
-    const min = 0.5;
-    if (id === "-") {
-      if (fontSizeScale3 > min) {
-        setFontSizeScale3(fontSizeScale3 - 0.1);
-      }
-    } else {
-      if (fontSizeScale3 < max) {
-        setFontSizeScale3(fontSizeScale3 + 0.1);
-      }
-    }
-  };
+  // // Scale of canvas compared to generated svg
+  // const scale = width / (isMobile ? 300 : 400);
+
+  // const colors = ["#fff", "#000", "#485868", "#73bab4"];
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // const generatedSvg = (
+  //   //   <Svg
+  //   //     logo={logo}
+  //   //     color={activeColor}
+  //   //     bgColor={activeBgColor}
+  //   //     width={width}
+  //   //     height={height}
+  //   //     line1={line1}
+  //   //     line2={line2}
+  //   //     line3={line3}
+  //   //     fontSizeScale1={fontSizeScale1}
+  //   //     fontSizeScale2={fontSizeScale2}
+  //   //     fontSizeScale3={fontSizeScale3}
+  //   //     fontSize={fontSize}
+  //   //     scale={scale}
+  //   //   />
+  //   // );
+  //   // setSvg(generatedSvg);
+  // };
+
+  // const handleClick = (e) => {
+  //   if (e.target.id[0] === "c") {
+  //     setActiveColor(e.target.id.replace("c_", ""));
+  //   } else {
+  //     setActiveBgColor(e.target.id.replace("bg_", ""));
+  //   }
+  // };
+
+  // const handleChange = (e) => {
+  //   if (e.target.id === "line0") {
+  //     setLine1(e.target.value);
+  //   } else if (e.target.id === "line1") {
+  //     setLine2(e.target.value);
+  //   } else {
+  //     setLine3(e.target.value);
+  //   }
+  // };
+
+  // const handleFontSizeScale1Change = (e) => {
+  //   const id = e.target.id;
+  //   const max = 1.5;
+  //   const min = 0.5;
+  //   if (id === "-") {
+  //     if (fontSizeScale1 > min) {
+  //       setFontSizeScale1(fontSizeScale1 - 0.1);
+  //     }
+  //   } else {
+  //     if (fontSizeScale1 < max) {
+  //       setFontSizeScale1(fontSizeScale1 + 0.1);
+  //     }
+  //   }
+  // };
+
+  // const handleFontSizeScale2Change = (e) => {
+  //   const id = e.target.id;
+  //   const max = 1.5;
+  //   const min = 0.5;
+  //   if (id === "-") {
+  //     if (fontSizeScale2 > min) {
+  //       setFontSizeScale2(fontSizeScale2 - 0.1);
+  //     }
+  //   } else {
+  //     if (fontSizeScale2 < max) {
+  //       setFontSizeScale2(fontSizeScale2 + 0.1);
+  //     }
+  //   }
+  // };
+
+  // const handleFontSizeScale3Change = (e) => {
+  //   const id = e.target.id;
+  //   const max = 1.5;
+  //   const min = 0.5;
+  //   if (id === "-") {
+  //     if (fontSizeScale3 > min) {
+  //       setFontSizeScale3(fontSizeScale3 - 0.1);
+  //     }
+  //   } else {
+  //     if (fontSizeScale3 < max) {
+  //       setFontSizeScale3(fontSizeScale3 + 0.1);
+  //     }
+  //   }
+  // };
 
   return (
     <div className="container custom-flex w-100 justify-content-around my-5 p-5 border">
@@ -131,33 +165,35 @@ const DesignTool = ({ width, height, lineCount }) => {
         }}
       >
         <Canvas
-          logo={logo}
-          color={activeColor}
-          backgroundColor={activeBgColor}
-          line1={line1}
-          line2={line2}
-          line3={line3}
-          fontSizeScale1={fontSizeScale1}
-          fontSizeScale2={fontSizeScale2}
-          fontSizeScale3={fontSizeScale3}
-          setFontSize={setFontSize}
-          ratio={ratio}
+          // logo={logo}
+          color={fontColor}
+          backgroundColor={backgroundColor}
+          width={width}
+          height={height}
+          // line1={line1}
+          // line2={line2}
+          // line3={line3}
+          // fontSizeScale1={fontSizeScale1}
+          // fontSizeScale2={fontSizeScale2}
+          // fontSizeScale3={fontSizeScale3}
+          // setFontSize={setFontSize}
+          // ratio={ratio}
         />
       </div>
       <div className="d-flex flex-column align-items-center align-items-md-start">
-        <div className="d-flex flex-column align-items-center align-items-md-start">
+        {/* <div className="d-flex flex-column align-items-center align-items-md-start">
           <Select
             activeColor={activeBgColor}
-            colors={colors}
+            // colors={colors}
             idStart="bg"
-            handleClick={handleClick}
+            // handleClick={handleClick}
             label="Achtergrond"
           />
           <Select
             activeColor={activeColor}
-            colors={colors}
+            // colors={colors}
             idStart="c"
-            handleClick={handleClick}
+            // handleClick={handleClick}
             label="Tekst"
           />
         </div>
@@ -165,23 +201,20 @@ const DesignTool = ({ width, height, lineCount }) => {
           Logo
           <input
             type="checkbox"
-            checked={logo}
-            onChange={(e) => setLogo(e.target.checked)}
+            // checked={logo}
+            // onChange={(e) => setLogo(e.target.checked)}
           />
-        </label>
+        </label> */}
 
         <TextForm
+          lines={lines}
           onSubmit={handleSubmit}
-          onChange={handleChange}
-          lineCount={lineCount}
-          line1={line1}
-          line2={line2}
-          line3={line3}
-          handleFontSizeScale1Change={handleFontSizeScale1Change}
-          handleFontSizeScale2Change={handleFontSizeScale2Change}
-          handleFontSizeScale3Change={handleFontSizeScale3Change}
+          onChange={handleChangeLines}
+          // handleFontSizeScale1Change={handleFontSizeScale1Change}
+          // handleFontSizeScale2Change={handleFontSizeScale2Change}
+          // handleFontSizeScale3Change={handleFontSizeScale3Change}
         />
-        {svg && svg}
+        {/* {svg && svg} */}
       </div>
     </div>
   );
