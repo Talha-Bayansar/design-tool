@@ -17,13 +17,7 @@ const TextForm = ({
         <div key={i} className="form-group">
           <label>Lijn {i + 1}</label>
           <div className="d-flex">
-            <input
-              type="text"
-              className="form-control"
-              id={key}
-              // maxLength="15"
-              // value={lines[key]}
-            />
+            <input type="text" className="form-control" id={key} />
             <button
               type="button"
               className="px-3 ml-1 btn rounded"

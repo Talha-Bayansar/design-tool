@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useMediaQuery } from "react-responsive";
-// import ScaleText from "react-scale-text";
 
 const Canvas = (props) => {
   const {
@@ -13,8 +12,6 @@ const Canvas = (props) => {
     widthIcon,
     heightIcon,
     fontSizes,
-    // setFontSize,
-    // ratio,
   } = props;
 
   const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
@@ -28,7 +25,7 @@ const Canvas = (props) => {
   };
 
   const getFontSize = (baseFontSize, text) => {
-    const charsPerLine = 15;
+    const charsPerLine = 12;
     const newEmSize = charsPerLine / text.length;
     let generatedFontSize = baseFontSize;
     if (newEmSize < 1) {

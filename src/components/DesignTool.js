@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Canvas from "./Canvas";
 import Select from "./Select/Select";
 import TextForm from "./TextForm";
-// import Svg from "./Svg";
 import { useMediaQuery } from "react-responsive";
 
 const DesignTool = ({
@@ -74,6 +73,11 @@ const DesignTool = ({
         filledLinesConst = { ...filledLinesConst, [key]: linesConst[key] };
     });
     setFilledLines(filledLinesConst);
+    resetFontSizes();
+  };
+
+  const resetFontSizes = () => {
+    setFontSizes(initializeFontSizes());
   };
 
   const handleChangeColors = (e) => {
@@ -97,43 +101,7 @@ const DesignTool = ({
     setFontSizes({ ...fontSizes, [key]: fontSizes[key] - 2 });
   };
 
-  // useEffects------------------------------------------------------------------------------------------------
-  // useEffect(() => {
-  //   console.log(lines);
-  // }, []);
-
-  // // logo, svg, font size
-  // const [svg, setSvg] = useState(null);
-  // const [fontSize, setFontSize] = useState(16);
-
-  // // Ratio of width and height
-  // const ratio = (height / width) * 100;
-
-  // // Scale of canvas compared to generated svg
-  // const scale = width / (isMobile ? 300 : 400);
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // const generatedSvg = (
-  //   //   <Svg
-  //   //     logo={logo}
-  //   //     color={activeColor}
-  //   //     bgColor={activeBgColor}
-  //   //     width={width}
-  //   //     height={height}
-  //   //     line1={line1}
-  //   //     line2={line2}
-  //   //     line3={line3}
-  //   //     fontSizeScale1={fontSizeScale1}
-  //   //     fontSizeScale2={fontSizeScale2}
-  //   //     fontSizeScale3={fontSizeScale3}
-  //   //     fontSize={fontSize}
-  //   //     scale={scale}
-  //   //   />
-  //   // );
-  //   // setSvg(generatedSvg);
-  // };
-
+  // return----------------------------------------------------------------------------------------------------
   return (
     <div className="container custom-flex w-100 justify-content-around my-5 p-5 border">
       <div className="d-flex bg-light sticky-top p-3 mb-3 mb-md-0">
@@ -147,8 +115,6 @@ const DesignTool = ({
           widthIcon={50}
           heightIcon={50}
           fontSizes={fontSizes}
-          // setFontSize={setFontSize}
-          // ratio={ratio}
         />
       </div>
       <div className="d-flex flex-column align-items-center align-items-md-start">
@@ -185,7 +151,6 @@ const DesignTool = ({
           onClickIncrement={incrementFontSizes}
           onClickDecrement={decrementFontSizes}
         />
-        {/* {svg && svg} */}
       </div>
     </div>
   );
