@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useMediaQuery } from "react-responsive";
 // import ScaleText from "react-scale-text";
 
 const Canvas = (props) => {
@@ -6,7 +7,6 @@ const Canvas = (props) => {
     lines,
     fontColor,
     backgroundColor,
-    width,
     height,
     scale,
     logo,
@@ -16,8 +16,19 @@ const Canvas = (props) => {
     // setFontSize,
     // ratio,
   } = props;
+
+  const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
+
+  const getY = (length, i) => {
+    if (length === 1) return 0;
+    else if (length === 2) return -20 + 40 * i;
+    else if (length === 3) return -20 + 20 * i;
+    else if (length === 4) return -20 + 15 * i;
+    else return 0;
+  };
+
   return (
-    <svg width={300} height={height * scale}>
+    <svg width={isMobile ? 250 : 300} height={height * scale}>
       <rect fill={backgroundColor} width="100%" height="100%" />
       {logo && (
         <rect
@@ -37,12 +48,15 @@ const Canvas = (props) => {
         style={{ transform: `translate(${logo ? "75%" : "50%"}, 50%)` }}
       >
         {Object.keys(lines).map((key, i) => {
+          const length = Object.keys(lines).length;
           if (lines[key]) {
             return (
-              <text fontSize={fontSizes[key]} y={-20 + 15 * i} key={i}>
+              <text fontSize={fontSizes[key]} y={getY(length, i)} key={i}>
                 {lines[key]}
               </text>
             );
+          } else {
+            return null;
           }
         })}
       </g>
@@ -108,15 +122,15 @@ const Canvas = (props) => {
   );
 };
 
-export const CustomDiv = ({ fontSize, children, setFontSize }) => {
-  useEffect(() => {
-    setFontSize(fontSize);
-  }, [fontSize]);
-  return (
-    <div className="d-flex flex-column justify-content-around align-items-center h-100 w-100">
-      {children}
-    </div>
-  );
-};
+// export const CustomDiv = ({ fontSize, children, setFontSize }) => {
+//   useEffect(() => {
+//     setFontSize(fontSize);
+//   }, [fontSize, setFontSize]);
+//   return (
+//     <div className="d-flex flex-column justify-content-around align-items-center h-100 w-100">
+//       {children}
+//     </div>
+//   );
+// };
 
 export default Canvas;

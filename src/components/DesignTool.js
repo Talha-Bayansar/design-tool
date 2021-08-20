@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Canvas from "./Canvas";
 import Select from "./Select/Select";
 import TextForm from "./TextForm";
-import Svg from "./Svg";
+// import Svg from "./Svg";
 import { useMediaQuery } from "react-responsive";
 
 const DesignTool = ({
@@ -17,7 +17,7 @@ const DesignTool = ({
   const MAX_LINE_COUNT = 4;
   const colors = ["#fff", "#000", "#485868", "#73bab4"];
   const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
-  const scale = 300 / width;
+  const scale = isMobile ? 250 / width : 300 / width;
 
   // initialisation functions----------------------------------------------------------------------------------
   const initializeLines = () => {
@@ -56,6 +56,7 @@ const DesignTool = ({
     defaultBackgroundColor || "#fff"
   );
   const [lines, setLines] = useState(initializeLines());
+  const [filledLines, setFilledLines] = useState({});
   const [logo, setLogo] = useState(false);
   const [fontSizes, setFontSizes] = useState(initializeFontSizes());
 
@@ -64,7 +65,14 @@ const DesignTool = ({
     const target = e.target;
     const id = target.id;
     const value = target.value;
+    const linesConst = { ...lines, [id]: value };
     setLines({ ...lines, [id]: value });
+    let filledLinesConst = {};
+    Object.keys(linesConst).forEach((key) => {
+      if (linesConst[key])
+        filledLinesConst = { ...filledLinesConst, [key]: linesConst[key] };
+    });
+    setFilledLines(filledLinesConst);
   };
 
   const handleChangeColors = (e) => {
@@ -129,10 +137,9 @@ const DesignTool = ({
     <div className="container custom-flex w-100 justify-content-around my-5 p-5 border">
       <div className="d-flex bg-light sticky-top p-3 mb-3 mb-md-0">
         <Canvas
-          lines={lines}
+          lines={filledLines}
           fontColor={fontColor}
           backgroundColor={backgroundColor}
-          width={width}
           height={height}
           scale={scale}
           logo={logo}
