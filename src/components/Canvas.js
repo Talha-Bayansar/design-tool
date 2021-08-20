@@ -59,6 +59,7 @@ const Canvas = (props) => {
           if (lines[key]) {
             return (
               <text
+                ref={(ref) => ref && console.log(ref.getBoundingClientRect())}
                 fontSize={getFontSize(fontSizes[key], lines[key])}
                 y={getY(length, i)}
                 key={i}
