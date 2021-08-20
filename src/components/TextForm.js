@@ -21,7 +21,7 @@ const TextForm = ({
               type="text"
               className="form-control"
               id={key}
-              maxLength="15"
+              // maxLength="15"
               // value={lines[key]}
             />
             <button

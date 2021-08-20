@@ -42,10 +42,11 @@ const DesignTool = ({
         : lineCount < MIN_LINE_COUNT
         ? MIN_LINE_COUNT
         : lineCount;
-
+    const baseFontSize =
+      count === 1 ? 32 : count === 2 ? 28 : count === 3 ? 24 : 20;
     let fontSizes = {};
     for (let i = 0; i < count; i++) {
-      fontSizes = { ...fontSizes, [`line${i}`]: 16 };
+      fontSizes = { ...fontSizes, [`line${i}`]: baseFontSize };
     }
     return fontSizes;
   };
