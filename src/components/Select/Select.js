@@ -1,11 +1,50 @@
 import React, { useState } from "react";
 import "./Select.css";
 
-const Select = ({ selectedColor, colors, idStart, onClick, label }) => {
-  const [isSelected, setIsSelected] = useState(false);
-
+const Select = ({
+  selectedColor,
+  list,
+  idStart,
+  onClick,
+  setSelectedInputChildren,
+  selectedInput,
+  setSelectedInput,
+  label,
+  selectedIconImg,
+}) => {
   const handleClickSelect = () => {
-    setIsSelected(!isSelected);
+    if (selectedInput === idStart) {
+      setSelectedInput(null);
+      setSelectedInputChildren(null);
+    }
+    if (selectedInput !== idStart) {
+      setSelectedInput(idStart);
+      setSelectedInputChildren(
+        <div className="select_content">
+          <div className="select_colors">
+            {idStart === "icon"
+              ? list.map((item, i) => (
+                  <img
+                    key={i}
+                    className="select_color my-1"
+                    src={item.img}
+                    onClick={() => onClick(item.img, item.svg)}
+                    id={`${idStart}_${i}`}
+                  />
+                ))
+              : list.map((color, i) => (
+                  <div
+                    key={i}
+                    onClick={onClick}
+                    className="select_color my-1"
+                    id={`${idStart}_${color}`}
+                    style={{ backgroundColor: color }}
+                  ></div>
+                ))}
+          </div>
+        </div>
+      );
+    }
   };
 
   return (
@@ -13,13 +52,18 @@ const Select = ({ selectedColor, colors, idStart, onClick, label }) => {
       {label}
       <div className="d-flex flex-column align-items-center">
         <div className="select_container" onClick={handleClickSelect}>
-          <div
-            className="select_color"
-            style={{ backgroundColor: selectedColor }}
-          />
+          {idStart === "icon" ? (
+            <img src={selectedIconImg} className="m-2" width={20} height={20} />
+          ) : (
+            <div
+              className="select_color"
+              style={{ backgroundColor: selectedColor }}
+            />
+          )}
+
           <span className="m-2">↓</span>
         </div>
-        {isSelected && (
+        {selectedInput === idStart && (
           <div
             style={{
               width: "20px",
@@ -30,21 +74,6 @@ const Select = ({ selectedColor, colors, idStart, onClick, label }) => {
           />
         )}
       </div>
-      {isSelected && (
-        <div className="select_content">
-          <div className="select_colors">
-            {colors.map((color, i) => (
-              <div
-                key={i}
-                onClick={onClick}
-                className="select_color my-1"
-                id={`${idStart}_${color}`}
-                style={{ backgroundColor: color }}
-              ></div>
-            ))}
-          </div>
-        </div>
-      )}
     </label>
   );
 };

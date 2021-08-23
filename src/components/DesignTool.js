@@ -3,6 +3,14 @@ import Canvas from "./Canvas";
 import Select from "./Select/Select";
 import TextForm from "./TextForm";
 import { useMediaQuery } from "react-responsive";
+import img93 from "../img/93.png";
+import img1283 from "../img/1283.png";
+import img3913 from "../img/3913.png";
+import img4282 from "../img/4282.png";
+import { ReactComponent as Svg93 } from "../svg/93.svg";
+import { ReactComponent as Svg1283 } from "../svg/1283.svg";
+import { ReactComponent as Svg3913 } from "../svg/3913.svg";
+import { ReactComponent as Svg4282 } from "../svg/4282.svg";
 
 const DesignTool = ({
   width,
@@ -15,6 +23,12 @@ const DesignTool = ({
   const MIN_LINE_COUNT = 1;
   const MAX_LINE_COUNT = 4;
   const colors = ["#fff", "#000", "#485868", "#73bab4"];
+  const icons = [
+    { img: img93, svg: <Svg93 /> },
+    { img: img1283, svg: <Svg1283 /> },
+    { img: img3913, svg: <Svg3913 /> },
+    { img: img4282, svg: <Svg4282 /> },
+  ];
   const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
   const scale = isMobile ? 250 / width : 300 / width;
 
@@ -57,8 +71,12 @@ const DesignTool = ({
   );
   const [lines, setLines] = useState(initializeLines());
   const [filledLines, setFilledLines] = useState({});
-  const [logo, setLogo] = useState(false);
+  const [isIcon, setIsIcon] = useState(false);
+  const [selectedIconImg, setSelectedIconImg] = useState(null);
+  const [selectedIconSvg, setSelectedIconSvg] = useState(null);
   const [fontSizes, setFontSizes] = useState(initializeFontSizes());
+  const [selectedInput, setSelectedInput] = useState(null);
+  const [selectedInputChildren, setSelectedInputChildren] = useState(null);
 
   // functions-------------------------------------------------------------------------------------------------
   const handleChangeLines = (e) => {
@@ -90,7 +108,7 @@ const DesignTool = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(lines);
+    console.log(lines, selectedIconImg);
   };
 
   const incrementFontSizes = (key) => {
@@ -111,7 +129,7 @@ const DesignTool = ({
           backgroundColor={backgroundColor}
           height={height}
           scale={scale}
-          logo={logo}
+          icon={selectedIconSvg}
           widthIcon={50}
           heightIcon={50}
           fontSizes={fontSizes}
@@ -121,28 +139,60 @@ const DesignTool = ({
         <div className="d-flex flex-wrap align-items-start">
           <Select
             selectedColor={backgroundColor}
-            colors={colors}
+            list={colors}
             idStart="bgc"
             onClick={handleChangeColors}
+            setSelectedInputChildren={setSelectedInputChildren}
+            selectedInput={selectedInput}
+            setSelectedInput={setSelectedInput}
             label="Kleur"
           />
           <Select
             selectedColor={fontColor}
-            colors={colors}
+            list={colors}
             idStart="fc"
             onClick={handleChangeColors}
+            setSelectedInputChildren={setSelectedInputChildren}
+            selectedInput={selectedInput}
+            setSelectedInput={setSelectedInput}
             label="Tekst"
           />
           <label className="d-flex flex-column align-items-center align-items-md-start mx-1">
-            Logo
+            Icoon
             <input
               type="checkbox"
               style={{ height: "40px", width: "40px" }}
-              checked={logo}
-              onChange={(e) => setLogo(e.target.checked)}
+              checked={isIcon}
+              onChange={(e) => {
+                setIsIcon(e.target.checked);
+                setSelectedIconImg(null);
+                setSelectedIconSvg(null);
+                if (!e.target.checked && selectedInput === "icon") {
+                  setSelectedInput(null);
+                  setSelectedInputChildren(null);
+                }
+              }}
             />
           </label>
+          {isIcon && (
+            <Select
+              selectedColor={fontColor}
+              list={icons}
+              idStart="icon"
+              onClick={(img, svg) => {
+                setSelectedIconImg(img);
+                setSelectedIconSvg(svg);
+                console.log(svg);
+              }}
+              setSelectedInputChildren={setSelectedInputChildren}
+              selectedInput={selectedInput}
+              setSelectedInput={setSelectedInput}
+              selectedIconImg={selectedIconImg}
+              label="Icoon"
+            />
+          )}
         </div>
+        {selectedInputChildren && selectedInputChildren}
 
         <TextForm
           lines={lines}

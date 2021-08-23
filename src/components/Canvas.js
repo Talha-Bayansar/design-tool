@@ -8,7 +8,7 @@ const Canvas = (props) => {
     backgroundColor,
     height,
     scale,
-    logo,
+    icon,
     widthIcon,
     heightIcon,
     fontSizes,
@@ -37,22 +37,35 @@ const Canvas = (props) => {
   return (
     <svg width={isMobile ? 250 : 300} height={height * scale}>
       <rect fill={backgroundColor} width="100%" height="100%" />
-      {logo && (
-        <rect
-          textAnchor="middle"
-          dominantBaseline="middle"
-          x="15%"
-          y={(height * scale - heightIcon * scale) / 2}
-          width={widthIcon * scale}
-          height={heightIcon * scale}
-          fill={fontColor}
-        />
-      )}
+      {
+        icon && (
+          <svg
+            fill={fontColor}
+            width={widthIcon * scale}
+            height={heightIcon * scale}
+            textAnchor="middle"
+            dominantBaseline="middle"
+            x="15%"
+            y={(height * scale - heightIcon * scale) / 2}
+          >
+            {icon}
+          </svg>
+        )
+        // <rect
+        //   textAnchor="middle"
+        //   dominantBaseline="middle"
+        //   x="15%"
+        //   y={(height * scale - heightIcon * scale) / 2}
+        //   width={widthIcon * scale}
+        //   height={heightIcon * scale}
+        //   fill={fontColor}
+        // />
+      }
       <g
         textAnchor="middle"
         dominantBaseline="middle"
         fill={fontColor}
-        style={{ transform: `translate(${logo ? "65%" : "50%"}, 50%)` }}
+        style={{ transform: `translate(${icon ? "65%" : "50%"}, 50%)` }}
       >
         {Object.keys(lines).map((key, i) => {
           const length = Object.keys(lines).length;
