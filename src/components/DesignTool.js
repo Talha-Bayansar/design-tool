@@ -29,6 +29,7 @@ const DesignTool = ({
     { img: img3913, svg: <Svg3913 /> },
     { img: img4282, svg: <Svg4282 /> },
   ];
+  const fontFamilies = ["Roboto", "Allison", "Rampart One"];
   const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
   const scale = isMobile ? 250 / width : 300 / width;
 
@@ -69,6 +70,7 @@ const DesignTool = ({
   const [backgroundColor, setBackgroundColor] = useState(
     defaultBackgroundColor || "#fff"
   );
+  const [selectedFontFamily, setSelectedFontFamily] = useState("Roboto");
   const [lines, setLines] = useState(initializeLines());
   const [filledLines, setFilledLines] = useState({});
   const [isIcon, setIsIcon] = useState(false);
@@ -121,6 +123,16 @@ const DesignTool = ({
       setFontSizes({ ...fontSizes, [key]: fontSizes[key] - 2 });
   };
 
+  const handleIconToggle = (e) => {
+    setIsIcon(e.target.checked);
+    setSelectedIconImg(null);
+    setSelectedIconSvg(null);
+    if (!e.target.checked && selectedInput === "icon") {
+      setSelectedInput(null);
+      setSelectedInputChildren(null);
+    }
+  };
+
   // return----------------------------------------------------------------------------------------------------
   return (
     <div className="container custom-flex w-100 justify-content-around my-5 p-5 border">
@@ -135,6 +147,7 @@ const DesignTool = ({
           widthIcon={50}
           heightIcon={50}
           fontSizes={fontSizes}
+          fontFamily={selectedFontFamily}
         />
       </div>
       <div className="d-flex flex-column align-items-center align-items-md-start">
@@ -159,21 +172,23 @@ const DesignTool = ({
             setSelectedInput={setSelectedInput}
             label="Tekst"
           />
+          <Select
+            list={fontFamilies}
+            idStart="fontFamily"
+            onClick={(e) => setSelectedFontFamily(e.target.id)}
+            selectedFontFamily={selectedFontFamily}
+            setSelectedInputChildren={setSelectedInputChildren}
+            selectedInput={selectedInput}
+            setSelectedInput={setSelectedInput}
+            label="Font"
+          />
           <label className="d-flex flex-column align-items-center align-items-md-start mx-1">
             Icoon
             <input
               type="checkbox"
               style={{ height: "40px", width: "40px" }}
               checked={isIcon}
-              onChange={(e) => {
-                setIsIcon(e.target.checked);
-                setSelectedIconImg(null);
-                setSelectedIconSvg(null);
-                if (!e.target.checked && selectedInput === "icon") {
-                  setSelectedInput(null);
-                  setSelectedInputChildren(null);
-                }
-              }}
+              onChange={handleIconToggle}
             />
           </label>
           {isIcon && (

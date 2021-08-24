@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Select.css";
 
 const Select = ({
@@ -11,6 +11,7 @@ const Select = ({
   setSelectedInput,
   label,
   selectedIconImg,
+  selectedFontFamily,
 }) => {
   const handleClickSelect = () => {
     if (selectedInput === idStart) {
@@ -31,6 +32,18 @@ const Select = ({
                     onClick={() => onClick(item.img, item.svg)}
                     id={`${idStart}_${i}`}
                   />
+                ))
+              : idStart === "fontFamily"
+              ? list.map((font, i) => (
+                  <div
+                    key={i}
+                    onClick={onClick}
+                    className="mx-2 my-1 border rounded"
+                    style={{ cursor: "pointer" }}
+                    id={font}
+                  >
+                    {font}
+                  </div>
                 ))
               : list.map((color, i) => (
                   <div
@@ -54,6 +67,8 @@ const Select = ({
         <div className="select_container" onClick={handleClickSelect}>
           {idStart === "icon" ? (
             <img src={selectedIconImg} className="m-2" width={20} height={20} />
+          ) : idStart === "fontFamily" ? (
+            <div className="m-2 border rounded">{selectedFontFamily}</div>
           ) : (
             <div
               className="select_color"

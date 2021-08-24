@@ -12,6 +12,7 @@ const Canvas = (props) => {
     widthIcon,
     heightIcon,
     fontSizes,
+    fontFamily,
   } = props;
 
   const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
@@ -64,6 +65,7 @@ const Canvas = (props) => {
                 ref={(ref) => ref && console.log(ref.getBoundingClientRect())}
                 fontSize={getFontSize(fontSizes[key], lines[key])}
                 y={getY(length, i)}
+                fontFamily={fontFamily}
                 key={i}
               >
                 {lines[key]}
