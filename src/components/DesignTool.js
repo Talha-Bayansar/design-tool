@@ -108,15 +108,17 @@ const DesignTool = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(lines, selectedIconImg);
+    console.log(lines);
   };
 
   const incrementFontSizes = (key) => {
-    setFontSizes({ ...fontSizes, [key]: fontSizes[key] + 2 });
+    if (fontSizes[key] < 39)
+      setFontSizes({ ...fontSizes, [key]: fontSizes[key] + 2 });
   };
 
   const decrementFontSizes = (key) => {
-    setFontSizes({ ...fontSizes, [key]: fontSizes[key] - 2 });
+    if (fontSizes[key] > 17)
+      setFontSizes({ ...fontSizes, [key]: fontSizes[key] - 2 });
   };
 
   // return----------------------------------------------------------------------------------------------------
@@ -182,7 +184,6 @@ const DesignTool = ({
               onClick={(img, svg) => {
                 setSelectedIconImg(img);
                 setSelectedIconSvg(svg);
-                console.log(svg);
               }}
               setSelectedInputChildren={setSelectedInputChildren}
               selectedInput={selectedInput}

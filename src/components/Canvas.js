@@ -37,30 +37,19 @@ const Canvas = (props) => {
   return (
     <svg width={isMobile ? 250 : 300} height={height * scale}>
       <rect fill={backgroundColor} width="100%" height="100%" />
-      {
-        icon && (
-          <svg
-            fill={fontColor}
-            width={widthIcon * scale}
-            height={heightIcon * scale}
-            textAnchor="middle"
-            dominantBaseline="middle"
-            x="15%"
-            y={(height * scale - heightIcon * scale) / 2}
-          >
-            {icon}
-          </svg>
-        )
-        // <rect
-        //   textAnchor="middle"
-        //   dominantBaseline="middle"
-        //   x="15%"
-        //   y={(height * scale - heightIcon * scale) / 2}
-        //   width={widthIcon * scale}
-        //   height={heightIcon * scale}
-        //   fill={fontColor}
-        // />
-      }
+      {icon && (
+        <svg
+          fill={fontColor}
+          width={widthIcon * scale}
+          height={heightIcon * scale}
+          textAnchor="middle"
+          dominantBaseline="middle"
+          x="15%"
+          y={(height * scale - heightIcon * scale) / 2}
+        >
+          {icon}
+        </svg>
+      )}
       <g
         textAnchor="middle"
         dominantBaseline="middle"
