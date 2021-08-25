@@ -119,7 +119,7 @@ const DesignTool = ({
   };
 
   const decrementFontSizes = (key) => {
-    if (fontSizes[key] > 17)
+    if (fontSizes[key] > 13)
       setFontSizes({ ...fontSizes, [key]: fontSizes[key] - 2 });
   };
 

@@ -39,7 +39,7 @@ const Select = ({
                     key={i}
                     onClick={onClick}
                     className="mx-2 my-1 border rounded"
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: "pointer", fontFamily: font }}
                     id={font}
                   >
                     {font}
