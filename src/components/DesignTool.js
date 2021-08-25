@@ -147,6 +147,7 @@ const DesignTool = ({
           widthIcon={50}
           heightIcon={50}
           fontSizes={fontSizes}
+          setFontSizes={setFontSizes}
           fontFamily={selectedFontFamily}
         />
       </div>

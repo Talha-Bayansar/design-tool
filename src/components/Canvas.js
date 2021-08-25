@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
 const Canvas = (props) => {
@@ -12,6 +12,7 @@ const Canvas = (props) => {
     widthIcon,
     heightIcon,
     fontSizes,
+    setFontSizes,
     fontFamily,
   } = props;
 
@@ -25,14 +26,15 @@ const Canvas = (props) => {
     else return 0;
   };
 
-  const getFontSize = (baseFontSize, text) => {
-    const charsPerLine = 12;
-    const newEmSize = charsPerLine / text.length;
-    let generatedFontSize = baseFontSize;
+  const handleFontSize = ({ width }, key) => {
+    const maxWidth = 120;
+    const newEmSize = maxWidth / width;
     if (newEmSize < 1) {
-      generatedFontSize = newEmSize * baseFontSize;
+      setFontSizes({
+        ...fontSizes,
+        [key]: fontSizes[key] * newEmSize,
+      });
     }
-    return generatedFontSize;
   };
 
   return (
@@ -62,8 +64,10 @@ const Canvas = (props) => {
           if (lines[key]) {
             return (
               <text
-                ref={(ref) => ref && console.log(ref.getBoundingClientRect())}
-                fontSize={getFontSize(fontSizes[key], lines[key])}
+                ref={(ref) =>
+                  ref && handleFontSize(ref.getBoundingClientRect(), key)
+                }
+                fontSize={fontSizes[key]}
                 y={getY(length, i)}
                 fontFamily={fontFamily}
                 key={i}
