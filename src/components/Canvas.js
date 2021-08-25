@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { useMediaQuery } from "react-responsive";
+import React from "react";
 
 const Canvas = (props) => {
   const {
     lines,
     fontColor,
     backgroundColor,
+    width,
     height,
     scale,
     icon,
@@ -15,8 +15,6 @@ const Canvas = (props) => {
     setFontSizes,
     fontFamily,
   } = props;
-
-  const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
 
   const getY = (length, i) => {
     if (length === 1) return 0;
@@ -38,7 +36,7 @@ const Canvas = (props) => {
   };
 
   return (
-    <svg width={isMobile ? 250 : 300} height={height * scale}>
+    <svg width={width} height={height * scale}>
       <rect fill={backgroundColor} width="100%" height="100%" />
       {icon && (
         <svg
@@ -67,7 +65,7 @@ const Canvas = (props) => {
                 ref={(ref) =>
                   ref && handleFontSize(ref.getBoundingClientRect(), key)
                 }
-                fontSize={fontSizes[key]}
+                fontSize={fontSizes[key] * scale}
                 y={getY(length, i)}
                 fontFamily={fontFamily}
                 key={i}

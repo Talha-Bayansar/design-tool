@@ -15,8 +15,11 @@ import { ReactComponent as Svg4282 } from "../svg/4282.svg";
 const DesignTool = ({
   width,
   height,
+  widthIcon,
+  heightIcon,
   defaultBackgroundColor,
   defaultFontColor,
+  defaultFontSize,
   lineCount,
 }) => {
   //constants--------------------------------------------------------------------------------------------------
@@ -57,7 +60,13 @@ const DesignTool = ({
         ? MIN_LINE_COUNT
         : lineCount;
     const baseFontSize =
-      count === 1 ? 32 : count === 2 ? 28 : count === 3 ? 24 : 20;
+      count === 1
+        ? defaultFontSize
+        : count === 2
+        ? defaultFontSize * 0.9
+        : count === 3
+        ? defaultFontSize * 0.85
+        : defaultFontSize * 0.8;
     let fontSizes = {};
     for (let i = 0; i < count; i++) {
       fontSizes = { ...fontSizes, [`line${i}`]: baseFontSize };
@@ -79,6 +88,7 @@ const DesignTool = ({
   const [fontSizes, setFontSizes] = useState(initializeFontSizes());
   const [selectedInput, setSelectedInput] = useState(null);
   const [selectedInputChildren, setSelectedInputChildren] = useState(null);
+  const [finalResult, setFinalResult] = useState(null);
 
   // functions-------------------------------------------------------------------------------------------------
   const handleChangeLines = (e) => {
@@ -110,7 +120,23 @@ const DesignTool = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(lines);
+    const finalSvg = (
+      <Canvas
+        lines={filledLines}
+        fontColor={fontColor}
+        backgroundColor={backgroundColor}
+        width={width}
+        height={height}
+        scale={1}
+        icon={selectedIconSvg}
+        widthIcon={widthIcon}
+        heightIcon={heightIcon}
+        fontSizes={fontSizes}
+        setFontSizes={setFontSizes}
+        fontFamily={selectedFontFamily}
+      />
+    );
+    setFinalResult(finalSvg);
   };
 
   const incrementFontSizes = (key) => {
@@ -135,90 +161,94 @@ const DesignTool = ({
 
   // return----------------------------------------------------------------------------------------------------
   return (
-    <div className="container custom-flex w-100 justify-content-around my-5 p-5 border">
-      <div className="d-flex bg-light sticky-top p-3 mb-3 mb-md-0">
-        <Canvas
-          lines={filledLines}
-          fontColor={fontColor}
-          backgroundColor={backgroundColor}
-          height={height}
-          scale={scale}
-          icon={selectedIconSvg}
-          widthIcon={50}
-          heightIcon={50}
-          fontSizes={fontSizes}
-          setFontSizes={setFontSizes}
-          fontFamily={selectedFontFamily}
-        />
-      </div>
-      <div className="d-flex flex-column align-items-center align-items-md-start">
-        <div className="d-flex flex-wrap align-items-start">
-          <Select
-            selectedColor={backgroundColor}
-            list={colors}
-            idStart="bgc"
-            onClick={handleChangeColors}
-            setSelectedInputChildren={setSelectedInputChildren}
-            selectedInput={selectedInput}
-            setSelectedInput={setSelectedInput}
-            label="Kleur"
+    <div className="d-flex flex-column align-items-center">
+      <div className="container custom-flex w-100 justify-content-around my-5 p-5 border">
+        <div className="d-flex bg-light sticky-top p-3 mb-3 mb-md-0">
+          <Canvas
+            lines={filledLines}
+            fontColor={fontColor}
+            backgroundColor={backgroundColor}
+            width={isMobile ? 250 : 300}
+            height={height}
+            scale={scale}
+            icon={selectedIconSvg}
+            widthIcon={widthIcon}
+            heightIcon={heightIcon}
+            fontSizes={fontSizes}
+            setFontSizes={setFontSizes}
+            fontFamily={selectedFontFamily}
           />
-          <Select
-            selectedColor={fontColor}
-            list={colors}
-            idStart="fc"
-            onClick={handleChangeColors}
-            setSelectedInputChildren={setSelectedInputChildren}
-            selectedInput={selectedInput}
-            setSelectedInput={setSelectedInput}
-            label="Tekst"
-          />
-          <Select
-            list={fontFamilies}
-            idStart="fontFamily"
-            onClick={(e) => setSelectedFontFamily(e.target.id)}
-            selectedFontFamily={selectedFontFamily}
-            setSelectedInputChildren={setSelectedInputChildren}
-            selectedInput={selectedInput}
-            setSelectedInput={setSelectedInput}
-            label="Font"
-          />
-          <label className="d-flex flex-column align-items-center align-items-md-start mx-1">
-            Icoon
-            <input
-              type="checkbox"
-              style={{ height: "40px", width: "40px" }}
-              checked={isIcon}
-              onChange={handleIconToggle}
-            />
-          </label>
-          {isIcon && (
+        </div>
+        <div className="d-flex flex-column align-items-center align-items-md-start">
+          <div className="d-flex flex-wrap align-items-start">
             <Select
-              selectedColor={fontColor}
-              list={icons}
-              idStart="icon"
-              onClick={(img, svg) => {
-                setSelectedIconImg(img);
-                setSelectedIconSvg(svg);
-              }}
+              selectedColor={backgroundColor}
+              list={colors}
+              idStart="bgc"
+              onClick={handleChangeColors}
               setSelectedInputChildren={setSelectedInputChildren}
               selectedInput={selectedInput}
               setSelectedInput={setSelectedInput}
-              selectedIconImg={selectedIconImg}
-              label="Icoon"
+              label="Kleur"
             />
-          )}
-        </div>
-        {selectedInputChildren && selectedInputChildren}
+            <Select
+              selectedColor={fontColor}
+              list={colors}
+              idStart="fc"
+              onClick={handleChangeColors}
+              setSelectedInputChildren={setSelectedInputChildren}
+              selectedInput={selectedInput}
+              setSelectedInput={setSelectedInput}
+              label="Tekst"
+            />
+            <Select
+              list={fontFamilies}
+              idStart="fontFamily"
+              onClick={(e) => setSelectedFontFamily(e.target.id)}
+              selectedFontFamily={selectedFontFamily}
+              setSelectedInputChildren={setSelectedInputChildren}
+              selectedInput={selectedInput}
+              setSelectedInput={setSelectedInput}
+              label="Font"
+            />
+            <label className="d-flex flex-column align-items-center align-items-md-start mx-1">
+              Icoon
+              <input
+                type="checkbox"
+                style={{ height: "40px", width: "40px" }}
+                checked={isIcon}
+                onChange={handleIconToggle}
+              />
+            </label>
+            {isIcon && (
+              <Select
+                selectedColor={fontColor}
+                list={icons}
+                idStart="icon"
+                onClick={(img, svg) => {
+                  setSelectedIconImg(img);
+                  setSelectedIconSvg(svg);
+                }}
+                setSelectedInputChildren={setSelectedInputChildren}
+                selectedInput={selectedInput}
+                setSelectedInput={setSelectedInput}
+                selectedIconImg={selectedIconImg}
+                label="Icoon"
+              />
+            )}
+          </div>
+          {selectedInputChildren && selectedInputChildren}
 
-        <TextForm
-          lines={lines}
-          onSubmit={handleSubmit}
-          onChange={handleChangeLines}
-          onClickIncrement={incrementFontSizes}
-          onClickDecrement={decrementFontSizes}
-        />
+          <TextForm
+            lines={lines}
+            onSubmit={handleSubmit}
+            onChange={handleChangeLines}
+            onClickIncrement={incrementFontSizes}
+            onClickDecrement={decrementFontSizes}
+          />
+        </div>
       </div>
+      {finalResult && finalResult}
     </div>
   );
 };
