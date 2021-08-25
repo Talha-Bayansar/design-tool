@@ -88,7 +88,6 @@ const DesignTool = ({
   const [fontSizes, setFontSizes] = useState(initializeFontSizes());
   const [selectedInput, setSelectedInput] = useState(null);
   const [selectedInputChildren, setSelectedInputChildren] = useState(null);
-  const [finalResult, setFinalResult] = useState(null);
 
   // functions-------------------------------------------------------------------------------------------------
   const handleChangeLines = (e) => {
@@ -136,7 +135,6 @@ const DesignTool = ({
         fontFamily={selectedFontFamily}
       />
     );
-    setFinalResult(finalSvg);
   };
 
   const incrementFontSizes = (key) => {
@@ -161,94 +159,91 @@ const DesignTool = ({
 
   // return----------------------------------------------------------------------------------------------------
   return (
-    <div className="d-flex flex-column align-items-center">
-      <div className="container custom-flex w-100 justify-content-around my-5 p-5 border">
-        <div className="d-flex bg-light sticky-top p-3 mb-3 mb-md-0">
-          <Canvas
-            lines={filledLines}
-            fontColor={fontColor}
-            backgroundColor={backgroundColor}
-            width={isMobile ? 250 : 300}
-            height={height}
-            scale={scale}
-            icon={selectedIconSvg}
-            widthIcon={widthIcon}
-            heightIcon={heightIcon}
-            fontSizes={fontSizes}
-            setFontSizes={setFontSizes}
-            fontFamily={selectedFontFamily}
+    <div className="container custom-flex w-100 justify-content-around my-5 p-5 border">
+      <div className="d-flex bg-light sticky-top p-3 mb-3 mb-md-0">
+        <Canvas
+          lines={filledLines}
+          fontColor={fontColor}
+          backgroundColor={backgroundColor}
+          width={isMobile ? 250 : 300}
+          height={height}
+          scale={scale}
+          icon={selectedIconSvg}
+          widthIcon={widthIcon}
+          heightIcon={heightIcon}
+          fontSizes={fontSizes}
+          setFontSizes={setFontSizes}
+          fontFamily={selectedFontFamily}
+        />
+      </div>
+      <div className="d-flex flex-column align-items-center align-items-md-start">
+        <div className="d-flex flex-wrap align-items-start">
+          <Select
+            selectedColor={backgroundColor}
+            list={colors}
+            idStart="bgc"
+            onClick={handleChangeColors}
+            setSelectedInputChildren={setSelectedInputChildren}
+            selectedInput={selectedInput}
+            setSelectedInput={setSelectedInput}
+            label="Kleur"
           />
-        </div>
-        <div className="d-flex flex-column align-items-center align-items-md-start">
-          <div className="d-flex flex-wrap align-items-start">
-            <Select
-              selectedColor={backgroundColor}
-              list={colors}
-              idStart="bgc"
-              onClick={handleChangeColors}
-              setSelectedInputChildren={setSelectedInputChildren}
-              selectedInput={selectedInput}
-              setSelectedInput={setSelectedInput}
-              label="Kleur"
+          <Select
+            selectedColor={fontColor}
+            list={colors}
+            idStart="fc"
+            onClick={handleChangeColors}
+            setSelectedInputChildren={setSelectedInputChildren}
+            selectedInput={selectedInput}
+            setSelectedInput={setSelectedInput}
+            label="Tekst"
+          />
+          <Select
+            list={fontFamilies}
+            idStart="fontFamily"
+            onClick={(e) => setSelectedFontFamily(e.target.id)}
+            selectedFontFamily={selectedFontFamily}
+            setSelectedInputChildren={setSelectedInputChildren}
+            selectedInput={selectedInput}
+            setSelectedInput={setSelectedInput}
+            label="Font"
+          />
+          <label className="d-flex flex-column align-items-center align-items-md-start mx-1">
+            Icoon
+            <input
+              type="checkbox"
+              style={{ height: "40px", width: "40px" }}
+              checked={isIcon}
+              onChange={handleIconToggle}
             />
+          </label>
+          {isIcon && (
             <Select
               selectedColor={fontColor}
-              list={colors}
-              idStart="fc"
-              onClick={handleChangeColors}
+              list={icons}
+              idStart="icon"
+              onClick={(img, svg) => {
+                setSelectedIconImg(img);
+                setSelectedIconSvg(svg);
+              }}
               setSelectedInputChildren={setSelectedInputChildren}
               selectedInput={selectedInput}
               setSelectedInput={setSelectedInput}
-              label="Tekst"
+              selectedIconImg={selectedIconImg}
+              label="Icoon"
             />
-            <Select
-              list={fontFamilies}
-              idStart="fontFamily"
-              onClick={(e) => setSelectedFontFamily(e.target.id)}
-              selectedFontFamily={selectedFontFamily}
-              setSelectedInputChildren={setSelectedInputChildren}
-              selectedInput={selectedInput}
-              setSelectedInput={setSelectedInput}
-              label="Font"
-            />
-            <label className="d-flex flex-column align-items-center align-items-md-start mx-1">
-              Icoon
-              <input
-                type="checkbox"
-                style={{ height: "40px", width: "40px" }}
-                checked={isIcon}
-                onChange={handleIconToggle}
-              />
-            </label>
-            {isIcon && (
-              <Select
-                selectedColor={fontColor}
-                list={icons}
-                idStart="icon"
-                onClick={(img, svg) => {
-                  setSelectedIconImg(img);
-                  setSelectedIconSvg(svg);
-                }}
-                setSelectedInputChildren={setSelectedInputChildren}
-                selectedInput={selectedInput}
-                setSelectedInput={setSelectedInput}
-                selectedIconImg={selectedIconImg}
-                label="Icoon"
-              />
-            )}
-          </div>
-          {selectedInputChildren && selectedInputChildren}
-
-          <TextForm
-            lines={lines}
-            onSubmit={handleSubmit}
-            onChange={handleChangeLines}
-            onClickIncrement={incrementFontSizes}
-            onClickDecrement={decrementFontSizes}
-          />
+          )}
         </div>
+        {selectedInputChildren && selectedInputChildren}
+
+        <TextForm
+          lines={lines}
+          onSubmit={handleSubmit}
+          onChange={handleChangeLines}
+          onClickIncrement={incrementFontSizes}
+          onClickDecrement={decrementFontSizes}
+        />
       </div>
-      {finalResult && finalResult}
     </div>
   );
 };

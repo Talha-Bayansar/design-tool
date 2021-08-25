@@ -62,9 +62,7 @@ const Canvas = (props) => {
           if (lines[key]) {
             return (
               <text
-                ref={(ref) =>
-                  ref && handleFontSize(ref.getBoundingClientRect(), key)
-                }
+                ref={(ref) => ref && handleFontSize(ref.getBBox(), key)}
                 fontSize={fontSizes[key] * scale}
                 y={getY(length, i)}
                 fontFamily={fontFamily}
