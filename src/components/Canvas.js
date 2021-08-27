@@ -14,6 +14,7 @@ const Canvas = (props) => {
     fontSizes,
     setFontSizes,
     fontFamily,
+    backgroundSvg,
   } = props;
 
   const getY = (length, i) => {
@@ -24,9 +25,9 @@ const Canvas = (props) => {
     else return 0;
   };
 
-  const handleFontSize = ({ width }, key) => {
-    const maxWidth = 120;
-    const newEmSize = maxWidth / width;
+  const handleFontSize = (box, key) => {
+    const maxWidth = width * 0.5;
+    const newEmSize = maxWidth / box.width;
     if (newEmSize < 1) {
       setFontSizes({
         ...fontSizes,
@@ -37,7 +38,23 @@ const Canvas = (props) => {
 
   return (
     <svg width={width} height={height * scale}>
-      <rect fill={backgroundColor} width="100%" height="100%" />
+      <rect fill={backgroundColor} width="100%" height="100%" rx="15" />
+      {backgroundSvg && (
+        <g id="BACKGROUND">
+          <defs>
+            <path
+              id="SVGID_1_"
+              d={`M 0 0 H ${width} V ${height * scale} H 0 L 0 0`}
+            />
+          </defs>
+          <clipPath id="SVGID_00000007411319959583004010000002298349094845270932_">
+            <use xlinkHref="#SVGID_1_" overflow="visible" />
+          </clipPath>
+          <g clipPath="url(#SVGID_00000007411319959583004010000002298349094845270932_)">
+            {backgroundSvg}
+          </g>
+        </g>
+      )}
       {icon && (
         <svg
           fill={fontColor}

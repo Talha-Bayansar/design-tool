@@ -12,6 +12,7 @@ const Select = ({
   label,
   selectedIconImg,
   selectedFontFamily,
+  backgroundSvg,
 }) => {
   const handleClickSelect = () => {
     if (selectedInput === idStart) {
@@ -45,6 +46,16 @@ const Select = ({
                     {font}
                   </div>
                 ))
+              : idStart === "background_svg"
+              ? list.map((svg, i) => (
+                  <div
+                    key={i}
+                    className="select_color my-1"
+                    onClick={() => onClick(svg)}
+                  >
+                    {svg}
+                  </div>
+                ))
               : list.map((color, i) => (
                   <div
                     key={i}
@@ -69,6 +80,8 @@ const Select = ({
             <img src={selectedIconImg} className="m-2" width={20} height={20} />
           ) : idStart === "fontFamily" ? (
             <div className="m-2 border rounded">{selectedFontFamily}</div>
+          ) : idStart === "background_svg" ? (
+            <div className="select_color">{backgroundSvg}</div>
           ) : (
             <div
               className="select_color"

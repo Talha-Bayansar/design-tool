@@ -11,6 +11,8 @@ import { ReactComponent as Svg93 } from "../svg/93.svg";
 import { ReactComponent as Svg1283 } from "../svg/1283.svg";
 import { ReactComponent as Svg3913 } from "../svg/3913.svg";
 import { ReactComponent as Svg4282 } from "../svg/4282.svg";
+import { ReactComponent as Bg1 } from "../svg/bg_1.svg";
+import { ReactComponent as Bg2 } from "../svg/bg_2.svg";
 
 const DesignTool = ({
   width,
@@ -32,6 +34,7 @@ const DesignTool = ({
     { img: img3913, svg: <Svg3913 /> },
     { img: img4282, svg: <Svg4282 /> },
   ];
+  const backgroundSvgs = [<Bg1 />, <Bg2 />];
   const fontFamilies = ["Roboto", "Allison", "Rampart One"];
   const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
   const scale = isMobile ? 250 / width : 300 / width;
@@ -79,6 +82,7 @@ const DesignTool = ({
   const [backgroundColor, setBackgroundColor] = useState(
     defaultBackgroundColor || "#fff"
   );
+  const [backgroundSvg, setBackgroundSvg] = useState(null);
   const [selectedFontFamily, setSelectedFontFamily] = useState("Roboto");
   const [lines, setLines] = useState(initializeLines());
   const [filledLines, setFilledLines] = useState({});
@@ -138,8 +142,7 @@ const DesignTool = ({
   };
 
   const incrementFontSizes = (key) => {
-    if (fontSizes[key] < 39)
-      setFontSizes({ ...fontSizes, [key]: fontSizes[key] + 2 });
+    setFontSizes({ ...fontSizes, [key]: fontSizes[key] + 2 });
   };
 
   const decrementFontSizes = (key) => {
@@ -165,6 +168,7 @@ const DesignTool = ({
           lines={filledLines}
           fontColor={fontColor}
           backgroundColor={backgroundColor}
+          backgroundSvg={backgroundSvg}
           width={isMobile ? 250 : 300}
           height={height}
           scale={scale}
@@ -207,6 +211,16 @@ const DesignTool = ({
             selectedInput={selectedInput}
             setSelectedInput={setSelectedInput}
             label="Font"
+          />
+          <Select
+            list={backgroundSvgs}
+            idStart="background_svg"
+            onClick={(svg) => setBackgroundSvg(svg)}
+            backgroundSvg={backgroundSvg}
+            setSelectedInputChildren={setSelectedInputChildren}
+            selectedInput={selectedInput}
+            setSelectedInput={setSelectedInput}
+            label="Decoratie"
           />
           <label className="d-flex flex-column align-items-center align-items-md-start mx-1">
             Icoon
